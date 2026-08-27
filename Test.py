@@ -1,6 +1,6 @@
 # Example file showing a circle moving on screen
 import pygame
-
+import pandas
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
@@ -8,8 +8,8 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
-
+player_pos1 = pygame.Vector2(50, screen.get_height() / 2)
+player_pos2 = pygame.Vector2(screen.get_width()-50, screen.get_height() / 2)
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -20,18 +20,19 @@ while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
 
-    pygame.draw.circle(screen, "red", player_pos, 40)
-
+    pygame.draw.rect(screen, "blue", (player_pos1.x,player_pos1.y,5,60))
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
-        player_pos.y -= 300 * dt
+        player_pos1.y -= 300 * dt
     if keys[pygame.K_s]:
-        player_pos.y += 300 * dt
-    if keys[pygame.K_a]:
-        player_pos.x -= 300 * dt
-    if keys[pygame.K_d]:
-        player_pos.x += 300 * dt
+        player_pos1.y += 300 * dt
 
+    pygame.draw.rect(screen, "red", (player_pos2.x,player_pos2.y,5,60))
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_UP]:
+        player_pos2.y -= 300 * dt
+    if keys[pygame.K_DOWN]:
+        player_pos2.y += 300 * dt
     # flip() the display to put your work on screen
     pygame.display.flip()
 
