@@ -7,7 +7,6 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 
-
 player_pos1 = pygame.Vector2(50, screen.get_height() / 2)
 player_pos2 = pygame.Vector2(screen.get_width()-50, screen.get_height() / 2)
 ball_pos =pygame.Vector2(screen.get_width()/2, screen.get_height() / 2)
@@ -16,6 +15,20 @@ ball_speed_y = 3
 #Player scores
 score1 = 0
 score2 = 0
+#Score Text setup
+font = pygame.font.Font('freesansbold.ttf', 32)
+#Player 1 Score
+score1_display = font.render(str(score1),True, 'green','blue')
+score1_displayRect = score1_display.get_rect()
+score1_displayRect.center = (1280 // 4, 30)
+#Player 2 Score
+score2_display = font.render(str(score2),True, 'green','blue')
+score2_displayRect = score1_display.get_rect()
+score2_displayRect.center = (1280*3//4, 30)
+#End Score Display
+scoreFinal_display = font.render("Not Decided",True, 'green','blue')
+scoreFinal_displayRect = scoreFinal_display.get_rect()
+scoreFinal_displayRect.center = (1280//2, 720//2)
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -25,6 +38,11 @@ while running:
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
+    #Basic text display
+    score1_display = font.render(str(score1), True, 'green', 'blue')
+    score2_display = font.render(str(score2), True, 'green', 'blue')
+    screen.blit(score1_display, score1_displayRect)
+    screen.blit(score2_display, score2_displayRect)
     player_1 = pygame.Rect((player_pos1.x,player_pos1.y,5,60))
     pygame.draw.rect(screen, "blue", player_1)
     keys = pygame.key.get_pressed()
@@ -62,11 +80,11 @@ while running:
         ball_speed_x = -ball_speed_x
     #End State
     if score1 > 4:
-        #Player 1 wins
-        pygame.quit()
+        scoreFinal_display = font.render("PLAYER 1 WINS!!!",True, 'green','blue')
+        screen.blit(scoreFinal_display, scoreFinal_displayRect)
     if score2 > 4:
-        #Player 2 wins
-        pygame.quit()
+        scoreFinal_display = font.render("PLAYER 2 WINS!!!", True, 'green', 'blue')
+        screen.blit(scoreFinal_display, scoreFinal_displayRect)
     pygame.draw.circle(screen, "black",ball_pos,10)
 
 
